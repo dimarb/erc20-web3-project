@@ -1,14 +1,15 @@
 const { Web3, HttpProvider  }  = require('web3');
 const fs = require('fs');
 const { privateKeyToAccount } = require('web3-eth-accounts');
+require('dotenv').config()
 
 // Conectar a la red Rinkeby usando Infura
 
-const web3 = new Web3(new HttpProvider('https://sepolia.infura.io/v3/7097e492c6fb45519c88c1860dc35ce7'));
+const web3 = new Web3(new HttpProvider(`https://sepolia.infura.io/v3/${process.env.INFURA_TOKEN}`));
 
 
 // Leer el archivo JSON con ABI y Bytecode
-const privateKey = '0x31e20ea6997b806163023b526f625fb03598fa72a21e2d40aff793baaf8f24a5';
+const privateKey =  process.env.PRIVATE_KEY_WALLET;
 const account = privateKeyToAccount(privateKey);
 const contractData = JSON.parse(fs.readFileSync('./MyTokenERC20.json', 'utf8'));
 const abi = contractData.abi;
